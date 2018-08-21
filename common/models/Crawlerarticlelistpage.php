@@ -9,11 +9,13 @@ use Yii;
 * @property integer $domainid   所属域名ID
 * @property string $name   咨询列表页的名称，比如湖北公务员招考列表页
 * @property string $url   地址是多少，比如http://www.xxx.gov.cn/100.html
+* @property integer $is_auto_public   自动发布资讯，通过设置crawlerarticle的is_public
 * @property string $pageencode   网页编码
-* @property string $xpath_a   列表页面里面的a标签XPATH路径
+* @property string $selector_a   列表页面里面的a标签XPATH路径
 * @property integer $linkindex   a标签selector选取的第几个a标签,默认第一个,即0
-* @property string $xpath_content   咨询主体内容的XPATH路径
-* @property string $xpath_content_page_path   资讯主体内容页的分页a标签XPATH路径
+* @property string $selector_time   列表页资讯时间 xpath
+* @property string $selector_content   咨询主体内容的XPATH路径
+* @property string $selector_content_page_path   资讯主体内容页的分页a标签XPATH路径
 * @property integer $enable   启用
 * @property integer $is_normal   是否正常状态
 * @property string $unnormal_system_mark   不正常情况的异常记录

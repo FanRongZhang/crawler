@@ -19,7 +19,10 @@
     foreach ($aryLinks as $oneLink):
     ?>
     <div class="oneArticle">
-        <div class="title" onclick="$t = $(this).next()[0];$t.style.display = $t.style.display != 'block' ? 'block' : 'none';"><?= $oneLink['title'] ?></div>
+        <div class="title" onclick="$t = $(this).next()[0];$t.style.display = $t.style.display != 'block' ? 'block' : 'none';">
+            <span><?= $oneLink['title'] ?></span>
+            <span><?= date('Y-m-d',$oneLink['article_time']) ?></span>
+        </div>
         <div class="content">
             <?= $oneLink['content'] ?>
         </div>

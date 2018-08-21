@@ -15,6 +15,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        'https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

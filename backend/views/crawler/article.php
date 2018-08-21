@@ -54,7 +54,6 @@ foreach ($list as $one):
     </td>
     <td>
         <a  class="my-menu open-newWindow" onclick="this.style.color='darkgreen';"  target="_blank" data-title="<?= $one->title ?>-查看" data-href="/crawler/showarticle?id=<?= $one->id ?>"><span class="Hui-iconfont Hui-iconfont-yanjing"></span> 查看</a>
-        <a  class="my-menu open-newWindow btnUse" title="使用该资讯"  onclick="this.style.color='darkgreen';"  target="_blank" data-title="<?= $one->title ?>-使用" data-href="/crawler/usethearticle?id=<?= $one->id ?>"><span class="Hui-iconfont Hui-iconfont-selected"></span> 使用</a>
         <a class="my-menu"  onclick="this.style.color='darkgreen';" target="_blank" href="/crawler/deletearticle?id=<?= $one->id ?>"><span class="Hui-iconfont Hui-iconfont-del2"></span> 删除</a>
     </td>
 </tr>

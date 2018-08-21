@@ -70,12 +70,7 @@ class CrawlerController extends BasewebController{
 
     public function actionCreatelistpage(){
         if($this->request->isGet){
-            $exam = false;
-            if( $examid = $this->getParam('examid') ){
-                $exam = Exam::findOne($examid);
-            }
             $domainid = $this->getParam('domainid');
-            $exams = Exam::find()->orderBy('area desc,year desc')->all();
             if($domainid) {
                 $domain = Crawlerdomain::findOne($domainid);
             }else{
@@ -86,10 +81,6 @@ class CrawlerController extends BasewebController{
                 'domains' => Crawlerdomain::find()->all(),
                 'domainid' => $domainid,
                 'domain' => $domain,
-                'categories' => Articlecategory::find()->all(),
-                'exams' => $exams,
-                'exam' => $exam,
-                'lastexamid' => isset($_SESSION['actionCreatelistpage_lastexamid']) ? $_SESSION['actionCreatelistpage_lastexamid'] : '',
             ]);
         }else{
             set_time_limit(0);
@@ -109,7 +100,6 @@ class CrawlerController extends BasewebController{
             }else{
                 if($listpage->save()){
 
-                    $_SESSION['actionCreatelistpage_lastexamid'] = $listpage->examid;
                     $processesCount = CrawlerService::PROCESSES_COUNT;
                     if($listpage->id <= $processesCount){
                         $listpage->process_id = ($listpage->id - 1);
@@ -154,11 +144,8 @@ class CrawlerController extends BasewebController{
     public function actionEditlistpage(){
         $listpage = Crawlerarticlelistpage::findOne($this->getParam('id'));
         if($this->request->isGet){
-            $exams = Exam::find()->orderBy('area desc,year desc')->all();
             return $this->render('editlistpage',[
                 'domains' => Crawlerdomain::find()->all(),
-                'categories' => Articlecategory::find()->all(),
-                'exams' => $exams,
                 'crawlerlistpage' => $listpage
             ]);
         }else{
@@ -184,14 +171,7 @@ class CrawlerController extends BasewebController{
 
 
     public function actionIndex(){
-        $exam = false;
         $query = Crawlerarticlelistpage::find()->orderBy('domainid desc,id desc')->where('1=1');
-        if( $examid = $this->getParam('examid') ){
-            $exam = Exam::findOne($examid);
-            $query->andWhere([
-                'examid' => $examid
-            ]);
-        }
 
         if( $is_normal = $this->getParam('is_normal') ){
             $query->andWhere([
@@ -200,7 +180,6 @@ class CrawlerController extends BasewebController{
         }
         $data = $this->getPageData( $query , $this->page);
         return $this->render('index', ArrayHelper::merge($data,[
-            'exam' => $exam
         ]));
     }
 
@@ -210,10 +189,6 @@ class CrawlerController extends BasewebController{
             'is_deleted' => 0,
             'hadhandle' => 0
         ]);//->orderBy('id desc');
-        if($examid = $this->getParam('examid')){
-            $exam = Exam::findOne($examid);
-            $q->andWhere('listpageid in (select id from crawlerarticlelistpage where examid='.$examid.')');
-        }
         $data = $this->getPageData($q,$this->page);
         return $this->render('article', ArrayHelper::merge($data,[
             'exam' => $exam
@@ -243,8 +218,10 @@ class CrawlerController extends BasewebController{
         $listpage = new Crawlerarticlelistpage();
         $listpage->setAttributes($this->param, false);
 
+        $aryResult = CrawlerService::crawl($listpage, false);
+
         $testResult = $this->render('test', [
-            'aryLinks' => CrawlerService::crawl($listpage, false)
+            'aryLinks' => $aryResult
         ]);
         return $testResult;
     }
@@ -258,17 +235,6 @@ class CrawlerController extends BasewebController{
             return $this->jsonSuccess();
         }
         var_dump($listpage->getFirstErrors());
-        exit;
-    }
-
-    public function actionUsethearticle(){
-        $id = $this->getParam('id');
-        $article = Crawlerarticle::findOne($id);
-        $article->hadhandle = 1;
-        if($article->save()){
-            return $this->redirect('/publicnotice/add-new-record?fromcrawlerarticle=1&categoryid='.$article->articlecategory.'&articleid='.$article->id.'&listpageid='.$article->listpageid);
-        }
-        var_dump($article->getFirstErrors());
         exit;
     }
 

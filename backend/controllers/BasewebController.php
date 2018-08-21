@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use app\services\MsgcodeService;
+use common\models\User;
 use yii\data\Pagination;
 use yii\db\ActiveQuery;
 use yii\web\Controller;
@@ -89,6 +90,7 @@ class BasewebController extends Controller
     public function __construct($id, $module, $config = [])
     {
 
+        \Yii::$app->name = '公务员';
         ini_set('upload_tmp_dir', \Yii::getAlias('@backend') . '/runtime/temp');
 
         //ini_set('session.gc_maxlifetime', 3600 * 60000);
@@ -113,15 +115,11 @@ class BasewebController extends Controller
 
         $this->page = $this->getParam('page') ? intval($this->getParam('page')) : 1;
 
-        //open session
-        \Yii::$app->session->open();
-        $this->user = $this->getCurrentAdminUser();
-        if($this->user){
-            $this->setCurrentAdminUser($this->user);
-        }
-
-        if(strpos($this->request->getUrl(), '/index/login')!==0 && !$this->user){
-            $this->goToLogin();
+        $userID = \Yii::$app->getUser()->getId();
+        if($userID) {
+            $this->user = User::findOne($userID);
+        }else{
+            $this->user = null;
         }
     }
 
@@ -137,15 +135,6 @@ class BasewebController extends Controller
             return false;
         }
         return $this->param[$name];
-    }
-
-
-    public function getCurrentAdminUser(){
-        return isset($_SESSION['backenduser']) ? $_SESSION['backenduser'] : false;
-    }
-
-    public function setCurrentAdminUser(Adminuser $user){
-        $_SESSION['backenduser'] = $user;
     }
 
     /**

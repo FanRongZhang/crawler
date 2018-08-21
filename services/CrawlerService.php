@@ -43,9 +43,10 @@ class CrawlerService
     {
         try {
             $url = $listpage->url;
-            $xpath_a = $listpage->xpath_a;//列表页a path
-            $xpath_content = $listpage->xpath_content;//内容页 content path
-            $xpath_content_page_path = $listpage->xpath_content_page_path; // 内容页 翻页 path
+            $xpath_a = $listpage->selector_a;//列表页咨询链接
+            $xpath_time = $listpage->selector_time;//列表页资讯时间
+            $xpath_content = $listpage->selector_content;//内容页 content path
+            $xpath_content_page_path = $listpage->selector_content_page_path; // 内容页 翻页 path
 
             if($forDb) {
                 $listpage->start_working_time_last_time = time();
@@ -58,16 +59,18 @@ class CrawlerService
                 $ql->encoding('UTF-8', $listpage->pageencode);
             }
 
-            if(!$ql->getHtml()){
+            if($ql->getHtml() == false){
                 return [];
             }
+
+            //file_put_contents('h', $ql->getHtml());
 
             //collect the title and link info
             $aryEveryLinkContent = $ql->rules([
                 'title' => [$xpath_a, 'text'],
                 'link' => [$xpath_a, 'href'],
+                'article_time' => [$xpath_time, 'text'],
             ])->query()->getData()->all();
-
 
             //如果未找到采用HTML SELECTOR兼容性更高的SIMPLEHTML
             if( !$aryEveryLinkContent ) {
@@ -142,15 +145,16 @@ class CrawlerService
                     });
                 }
 
-                $oneLinkContent['url'] = $targetUrl;
-                $oneLinkContent['articlecategory'] = $listpage->articlecategory;
                 $oneLinkContent['domainid'] = $listpage->domainid;
                 $oneLinkContent['listpageid'] = $listpage->id;
+                $oneLinkContent['url'] = $targetUrl;
                 try {
                     $oneLinkContent['keyword'] = $ql->find('meta[name=keywords]')->content; //The page keywords
                     $oneLinkContent['description'] = $ql->find('meta[name=description]')->content; //The page keywords
                 } catch (\Exception $ep) {
                     //do nothing,skip it
+                }catch (\Throwable $a){
+                    //ignore it
                 }
 
                 //将DOC PDF等文件的下载地址更换
@@ -175,8 +179,14 @@ class CrawlerService
                     $oneLinkContent['content'] = implode('<hr>', $aryContent);
                 }
                 */
+
                 $oneLinkContent['content'] = implode('<hr>', $aryContent);
+                $oneLinkContent['article_time'] = is_int($oneLinkContent['article_time']) ? $oneLinkContent['article_time'] : strtotime($oneLinkContent['article_time']);
+                $oneLinkContent['is_public'] = 1;
+                $oneLinkContent['is_deleted'] = 0;
                 $oneLinkContent['createtime'] = time();
+
+
 
                 if($forDb){
                     $crawler = new Crawlerarticle();

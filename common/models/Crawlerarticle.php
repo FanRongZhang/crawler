@@ -11,11 +11,11 @@ use Yii;
 * @property string $title   资讯标题
 * @property string $keyword   关键字
 * @property string $description   描述
-* @property longtext $content   资讯内容
 * @property integer $article_time   资讯时间
-* @property integer $createtime   创建时间int
-* @property integer $hadhandle   已经处理和使用了该资讯了
+* @property longtext $content   资讯内容
+* @property integer $is_public   公开
 * @property integer $is_deleted   已删除
+* @property integer $createtime   创建时间int
 */
 class Crawlerarticle extends \yii\db\ActiveRecord
 {

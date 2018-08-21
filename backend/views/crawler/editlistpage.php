@@ -30,24 +30,13 @@
     }
 </script>
 
-<script>
-    var findArea = function (txt,domName) {
-        var select = getFirstElementByName(domName);
-        for (var i = 0; i < select.options.length; i++) {
-            if (select.options[i].text.indexOf(txt) != -1) {
-                select.options[i].selected = true;
-                break;
-            }
-        }
-    }
-</script>
 
 <div style="background-color: #333;color: white;border: solid 1px #1295bf;" id="testResult">
 
 </div>
 
 <form method="post" enctype="multipart/form-data"  class="my-form" id="form1">
-    <table class="table table-border table-bordered my-table">
+    <table class="table">
         <tbody>
             <tr>
                 <th style="width: 250px;">域名：</th>
@@ -72,7 +61,7 @@
             <tr>
                 <th>网页地址（网址）：</th>
                 <td>
-                    <input type="text" name="url" id="url" value="<?= $crawlerlistpage->url ?>" />
+                    <input type="text" name="url"  value="<?= $crawlerlistpage->url ?>" />
                 </td>
             </tr>
             <tr>
@@ -86,56 +75,33 @@
                 </td>
             </tr>
             <tr>
-                <th>合适的分类【仅供参考】：</th>
+                <th>资讯链接selector(列表页)：</th>
                 <td>
-                    <select  name="articlecategory">
-                    <?php
-                    foreach ($categories as $oneCategory):
-                    ?>
-                    <option value="<?= $oneCategory->id ?>"   <?= $crawlerlistpage->articlecategory == $oneCategory->id ? 'selected' : '' ?>   ><?= $oneCategory->text ?></option>
-                    <?php
-                    endforeach;
-                    ?>
-                    </select>
+                    <input type="text" name="selector_a"  value="<?= \yii\helpers\Html::encode($crawlerlistpage->selector_a) ?>" />
                 </td>
             </tr>
             <tr>
-                <th>合适的考试【仅供参考】：</th>
+                <th>第几个A标签(列表页)：</th>
                 <td>
-                    <select name="examid">
-                        <?php
-                        foreach ($exams as $oneExam):
-                            ?>
-                            <option value="<?= $oneExam->id ?>"  <?= $oneExam->id == $crawlerlistpage->examid ? 'selected' : '' ?>  ><?= $oneExam->name ?></option>
-                            <?php
-                        endforeach;
-                        ?>
-                    </select>
-                    <input type="text"  onkeyup="findArea($(this).val(),'examid')" style="width: 120px;" placeholder="搜索考试"/>
+                    <input type="text" name="linkindex" value="<?= $crawlerlistpage->linkindex ?>" style="width: 100px;"  /> [资讯链接selector无法直接获取a标签时候，采用资讯链接selector的上一级同时使用simple_dom_html进行a标签获取]
                 </td>
             </tr>
             <tr>
-                <th>资讯链接selector：</th>
+                <th>咨询时间(列表页)：</th>
                 <td>
-                    <input type="text" name="xpath_a"  id="xpath_a" value="<?= $crawlerlistpage->xpath_a ?>" />
-                </td>
-            </tr>
-            <tr>
-                <th>第几个A标签：</th>
-                <td>
-                    <input type="text" name="linkindex" id="linkindex"  value="<?= $crawlerlistpage->linkindex ?>" style="width: 100px;"  /> [资讯链接selector无法直接获取a标签时候，采用资讯链接selector的上一级同时使用simple_dom_html进行a标签获取]
+                    <input type="text" name="selector_time" value="<?= \yii\helpers\Html::encode($crawlerlistpage->selector_time) ?>"   />
                 </td>
             </tr>
             <tr>
                 <th>资讯内容selector：</th>
                 <td>
-                    <input type="text" name="xpath_content"  id="xpath_content" value="<?= $crawlerlistpage->xpath_content ?>" />
+                    <input type="text" name="selector_content" value="<?= \yii\helpers\Html::encode($crawlerlistpage->selector_content) ?>" />
                 </td>
             </tr>
             <tr>
                 <th>资讯内容翻页selector：</th>
                 <td>
-                    <input type="text" name="xpath_content_path" id="xpath_content_path" placeholder="没有可不填" value="<?= $crawlerlistpage->xpath_content_path ?>" />
+                    <input type="text" name="selector_content_page_path" placeholder="没有可不填" value="<?= \yii\helpers\Html::encode($crawlerlistpage->selector_content_page_path) ?>" />
                 </td>
             </tr>
             <tr>
@@ -168,19 +134,3 @@
         </tbody>
     </table>
 </form>
-
-
-<script>
-    //执行一个laydate实例
-    laydate.render({
-        elem: '#starttime', //指定元素
-        type: 'datetime'
-    });
-</script>
-<script>
-    //执行一个laydate实例
-    laydate.render({
-        elem: '#endtime', //指定元素
-        type: 'datetime'
-    });
-</script>

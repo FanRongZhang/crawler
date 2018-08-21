@@ -11,8 +11,15 @@ class AutomodelsController extends \yii\console\Controller{
         $dbName = 'gongwuyuan';
         $aryTables = \Yii::$app->db->createCommand('select table_name,table_comment from information_schema.tables where table_schema=\''.$dbName.'\'')->queryAll();
         foreach($aryTables as $oneTable){
+
+
+
             $tableName = $oneTable['table_name'];
             $tableComment = $oneTable['table_comment'];
+
+            if(mb_strtolower($tableName) == 'user'){
+                continue;
+            }
 
             /*
             if(strtolower($tableName) == 'user'){

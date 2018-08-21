@@ -1,32 +1,12 @@
 <?php
 /* @var $list common\models\Crawlerarticlelistpage[] */
 /* @var $pages \yii\data\Pagination */
-/* @var $exam \common\models\Exam */
 
 ?>
-<nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>
-    <a href="#"> 首页</a>
-    <span class="c-gray en">&gt;</span>
-    <a href="#">系统管理</a>
-    <span class="c-gray en">&gt;</span>
-    <a href="">基本设置</a>
-    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
-</nav>
-<div class="page-container">
-    <div class="tabBar cl">
-        <a href="/crawler/index" class="active">爬虫管理</a>
-        <a href="/crawler/article">资讯管理</a>
-        <a href="/crawler/domains">域名管理</a>
-    </div>
-
 
 
 <form class="listdata-form" id="searchForm" method="post">
     <div class="wrapper-header" style="margin-top: 0;">
-        <div style="float:left;">
-         <a data-href="/crawler/createdomain?examid=<?= $exam ? $exam->id : '' ?>" data-title="创建域名列表" class="btn btn-primary open-newWindow"><span class="glyphicon glyphicon-plus"></span> 创建域名列表</a>
-        </div>
             <div style="float: left;margin-left: 20px;">
                 <span>异常情况：</span>
                 <select name="is_normal">
@@ -41,13 +21,12 @@
     </div>
 </form>
 
-<table class="my-table">
+<table class="table">
     <tr>
         <th>ID</th>
         <th style="width: 350px;">名称</th>
         <th style="width: 400px;">网址</th>
         <th style="width: 150px;">处理进程ID</th>
-        <th style="width: 150px;">资讯分类</th>
         <th style="width: 150px;">启用</th>
         <th style="width: 150px;">是否异常</th>
         <th style="width: 150px;">异常信息</th>
@@ -72,9 +51,6 @@ foreach ($list as $one):
         <?= $one->process_id ?>
     </td>
     <td>
-        <?= \common\models\Articlecategory::findOne($one->articlecategory)->text ?>
-    </td>
-    <td>
         <?= $one->enable ? '是' : '否'?>
     </td>
     <td>
@@ -96,8 +72,8 @@ foreach ($list as $one):
         <?= date('Y-m-d H:i:s',$one->createtime) ?>
     </td>
     <td style="padding: 0;">
-        <a class="my-menu open-newWindow" data-title="修改咨询"  data-href="/crawler/editlistpage?id=<?= $one->id ?>"><span class="Hui-iconfont Hui-iconfont-edit"></span> 修改</a>
-        <a class="my-menu"  href="/crawler/marktonormal?id=<?= $one->id ?>" target="_blank"><span class="Hui-iconfont Hui-iconfont-shenhe-tongguo"></span> 标记为正常</a>
+        <a  href="/crawler/editlistpage?id=<?= $one->id ?>"><span class="Hui-iconfont Hui-iconfont-edit"></span> 修改</a>
+        <a href="/crawler/marktonormal?id=<?= $one->id ?>" target="_blank"><span class="Hui-iconfont Hui-iconfont-shenhe-tongguo"></span> 标记为正常</a>
     </td>
 </tr>
 <?php
