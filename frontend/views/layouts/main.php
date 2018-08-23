@@ -10,6 +10,10 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+$contentTypes = \common\models\Crawlercontenttype::findAll([
+        'show_in_indexpage' => 1
+]);
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -36,14 +40,21 @@ AppAsset::register($this);
         </header>
 
         <nav class="bar bar-tab">
-            <a class="tab-item active" href="/dashi/">
-                <span class="icon icon-home"></span>
-                <span class="tab-label">招考信息</span>
-            </a>
-            <a class="tab-item" href="chat.html">
-                <span class="icon icon-me"></span>
-                <span class="tab-label">考试结果</span>
-            </a>
+            <?php
+            $current_i = 0;
+            foreach ($contentTypes as $one) {
+                ++$current_i;
+                ?>
+                <a class="tab-item <?= $current_i == 1 ? 'active' : '' ?>" href="<?= \yii\helpers\Url::toRoute([
+                        '/content/list',
+                        'content_type' => $one->id
+                ]) ?>">
+                    <span class="icon icon-home"></span>
+                    <span class="tab-label"><?= Html::encode($one->name) ?></span>
+                </a>
+                <?php
+            }
+            ?>
             <a class="tab-item" href="/me/">
                 <span class="icon icon-star"></span>
                 <span class="tab-label">我的服务</span>

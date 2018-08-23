@@ -146,6 +146,7 @@ class CrawlerService
                 }
 
                 $oneLinkContent['domainid'] = $listpage->domainid;
+                $oneLinkContent['content_type'] = $listpage->content_type;
                 $oneLinkContent['listpageid'] = $listpage->id;
                 $oneLinkContent['url'] = $targetUrl;
                 try {
@@ -185,8 +186,6 @@ class CrawlerService
                 $oneLinkContent['is_public'] = 1;
                 $oneLinkContent['is_deleted'] = 0;
                 $oneLinkContent['createtime'] = time();
-
-
 
                 if($forDb){
                     $crawler = new Crawlerarticle();

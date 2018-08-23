@@ -9,6 +9,7 @@ use common\models\Articlecategory;
 use common\models\Book;
 use common\models\Crawlerarticle;
 use common\models\Crawlerarticlelistpage;
+use common\models\Crawlercontenttype;
 use common\models\Crawlerdomain;
 use common\models\Exam;
 use QL\QueryList;
@@ -79,6 +80,7 @@ class CrawlerController extends BasewebController{
             return $this->render('createlistpage',[
                 'aryParam' => $this->param,
                 'domains' => Crawlerdomain::find()->all(),
+                'contenttypes' => Crawlercontenttype::find()->all(),
                 'domainid' => $domainid,
                 'domain' => $domain,
             ]);
@@ -146,6 +148,7 @@ class CrawlerController extends BasewebController{
         if($this->request->isGet){
             return $this->render('editlistpage',[
                 'domains' => Crawlerdomain::find()->all(),
+                'contenttypes' => Crawlercontenttype::find()->all(),
                 'crawlerlistpage' => $listpage
             ]);
         }else{
@@ -160,6 +163,9 @@ class CrawlerController extends BasewebController{
                 return $this->redirect(Url::current());
             }else{
                 if($listpage->save()){
+                    if($this->getParam('lianxuyema') == 1){
+                        $this->lianxuyema($listpage, $this->getParam('yemadizhi'), $this->getParam('qishiyema'), $this->getParam('jiesuyema'));
+                    }
                     $this->addAlertInfo('操作成功');
                     return $this->redirect(Url::current());
                 }else{

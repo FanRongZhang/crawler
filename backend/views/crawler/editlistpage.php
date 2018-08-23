@@ -1,7 +1,7 @@
 <?php
 /* @var $domains common\models\Crawlerdomain[] */
 /* @var $crawlerlistpage common\models\Crawlerarticlelistpage */
-/* @var $categories common\models\Articlecategory[] */
+/* @var $contenttypes common\models\Crawlercontenttype[] */
 ?>
 <script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.js"></script>
 
@@ -49,6 +49,20 @@
                     <?php
                     endforeach;
                     ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 250px;">内容类型：</th>
+                <td>
+                    <select name="content_type">
+                        <?php
+                        foreach ($contenttypes as $one):
+                            ?>
+                            <option value="<?= $one->id ?>"   <?= $crawlerlistpage->content_type == $one->id ? 'selected' : '' ?>    >   <?= $one->name ?>  </option>
+                            <?php
+                        endforeach;
+                        ?>
                     </select>
                 </td>
             </tr>

@@ -8,6 +8,7 @@ use Yii;
 * @property integer $process_id   指定哪个进程ID进行处理，比如0
 * @property integer $domainid   所属域名ID
 * @property string $name   咨询列表页的名称，比如湖北公务员招考列表页
+* @property integer $content_type   内容类型
 * @property string $url   地址是多少，比如http://www.xxx.gov.cn/100.html
 * @property integer $is_auto_public   自动发布资讯，通过设置crawlerarticle的is_public
 * @property string $pageencode   网页编码
