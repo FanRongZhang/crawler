@@ -4,7 +4,7 @@
 
 <style>
     .oneArticle *{
-        color: white;
+        color: brown;
     }
     .oneArticle .content{
         display: none;
@@ -16,15 +16,15 @@
 
 <div>
     <?php
-    foreach ($aryLinks as $oneLink):
+    foreach ($aryLinks as $one):
     ?>
     <div class="oneArticle">
         <div class="title" onclick="$t = $(this).next()[0];$t.style.display = $t.style.display != 'block' ? 'block' : 'none';">
-            <span><?= $oneLink['title'] ?></span>
-            <span><?= date('Y-m-d',$oneLink['article_time']) ?></span>
+            <span><?= $one['title'] ?></span>
+            <span><?= date('Y-m-d',$one['article_time']) ?></span>
         </div>
         <div class="content">
-            <?= $oneLink['content'] ?>
+            <?= $one['content'] ?>
         </div>
     </div>
     <?php

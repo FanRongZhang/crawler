@@ -46,7 +46,7 @@
         loading = true;
         var offset = $('.list-container li').length;
         $.ajax({
-            url:'/content/ajaxlist?content_type=<?= $content_type ?>&offset=' + offset,
+            url:'/content/ajax-list?content_type=<?= $content_type ?>&offset=' + offset,
             success:function (result) {
                 loading = false;
                 if(result.code != 0){
@@ -64,6 +64,8 @@
             }
         });
     }
+
+    pulldata();
 
     // 注册'infinite'事件处理函数
     $(document).on('infinite', '.infinite-scroll-bottom',function() {

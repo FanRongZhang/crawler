@@ -5,7 +5,6 @@
 /* @var $contenttypes common\models\Crawlercontenttype[] */
 ?>
 
-<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.js"></script>
 
 <script>
     var test = function () {
@@ -42,8 +41,12 @@
 </script>
 
 
+    <div id="testResult"></div>
+
     <?php
-    $form = \yii\bootstrap\ActiveForm::begin();
+    $form = \yii\bootstrap\ActiveForm::begin([
+            'id' => 'form1'
+    ]);
     ?>
 
 
@@ -118,7 +121,7 @@
             <tr>
                 <th>资讯链接selector：</th>
                 <td>
-                    <input type="text" name="selector_a" id="xpath_a" value="<?= $domain ? $domain->xpath_a : '' ?>" style="width: 800px;"  />
+                    <input type="text" name="selector_a" value="<?= $domain ? $domain->selector_a : '' ?>" style="width: 800px;"  />
                 </td>
             </tr>
             <tr>

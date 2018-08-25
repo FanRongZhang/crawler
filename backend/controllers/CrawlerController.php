@@ -123,12 +123,23 @@ class CrawlerController extends BasewebController{
     }
 
     private function lianxuyema(Crawlerarticlelistpage $listpage, $url, $qishi, $jiesu){
-        while ($qishi <= $jiesu){
+        --$qishi;
+        while (++$qishi <= $jiesu){
             $newListpage = new Crawlerarticlelistpage();
             $newListpage->setAttributes($listpage->getAttributes(null,[
                 'id'
             ]),false);
             $newListpage->url = str_replace('{page}',$qishi, $url);
+
+            //已经存在的就跳过
+            if(
+                Crawlerarticlelistpage::findOne([
+                'url' => $newListpage->url
+                ])
+            ){
+                continue;
+            }
+
             $newListpage->is_normal = 1;
             $newListpage->save();
             $processesCount = CrawlerService::PROCESSES_COUNT;
@@ -138,7 +149,6 @@ class CrawlerController extends BasewebController{
                 $newListpage->process_id = $newListpage->id % $processesCount;
             }
             $newListpage->save();
-            $qishi++;
         }
     }
 
@@ -193,7 +203,6 @@ class CrawlerController extends BasewebController{
         $exam = false;
         $q = Crawlerarticle::find()->where([
             'is_deleted' => 0,
-            'hadhandle' => 0
         ]);//->orderBy('id desc');
         $data = $this->getPageData($q,$this->page);
         return $this->render('article', ArrayHelper::merge($data,[

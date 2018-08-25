@@ -24,17 +24,17 @@
 <table class="table">
     <tr>
         <th>ID</th>
-        <th style="width: 350px;">名称</th>
-        <th style="width: 400px;">网址</th>
-        <th style="width: 150px;">处理进程ID</th>
-        <th style="width: 150px;">启用</th>
-        <th style="width: 150px;">是否异常</th>
-        <th style="width: 150px;">异常信息</th>
-        <th style="width: 150px;">正在工作中</th>
-        <th style="width: 150px;">上次工作开始时间</th>
-        <th style="width: 150px;">上次工作结束时间</th>
-        <th style="width: 150px;">网址创建时间</th>
-        <th style="width: 350px;">操作</th>
+        <th >名称</th>
+        <th >网址</th>
+        <th >处理进程ID</th>
+        <th >启用</th>
+        <th >是否异常</th>
+        <th >异常信息</th>
+        <th >正在工作中</th>
+        <th >上次工作开始时间</th>
+        <th >上次工作结束时间</th>
+        <th >网址创建时间</th>
+        <th >操作</th>
     </tr>
 <?php
 foreach ($list as $one):
