@@ -15,8 +15,11 @@ class AppAsset extends AssetBundle
         '//g.alicdn.com/msui/sm/0.6.2/css/??sm.min.css,sm-extend.min.css',
     ];
     public $js = [
-        '//g.alicdn.com/msui/sm/0.6.2/js/??sm.min.js,sm-extend.min.js'
+        '//g.alicdn.com/sj/lib/zepto/zepto.min.js',
+        '//g.alicdn.com/msui/sm/0.6.2/js/??sm.min.js,sm-extend.min.js',
     ];
     public $depends = [
     ];
+
+    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 }
