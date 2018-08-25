@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2018/8/22/022
- * Time: 13:55
- */
+
 ?>
 
 
@@ -33,7 +28,8 @@
         // 生成新条目的HTML
         var html = '';
         for(var i in data){
-            html += '<li class="item-content"><div class="item-inner"><div class="item-title">' + data[i].title + '</div></div></li>';
+            var $a = '<a href="/content/article?id='+ data[i].id +'">'+ data[i].title +'</a>';
+            html += '<li class="item-content"><div class="item-inner"><div class="item-title">' + $a + '</div></div></li>';
         }
         if(html) {
             $('.infinite-scroll-bottom .list-container').append(html);

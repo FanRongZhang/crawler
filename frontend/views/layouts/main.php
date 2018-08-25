@@ -14,6 +14,8 @@ $contentTypes = \common\models\Crawlercontenttype::findAll([
         'show_in_indexpage' => 1
 ]);
 
+$this->title =  $this->title . '--十大教育';
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -33,8 +35,6 @@ AppAsset::register($this);
 
 <div class="page-group">
     <div class="page page-current">
-
-
         <header class="bar bar-nav">
             <h1 class="title"><?= Html::encode($this->title) ?></h1>
         </header>
@@ -63,8 +63,32 @@ AppAsset::register($this);
 
 
         <div class="content"><?= $content ?></div>
+    </div>
 
-
+    <div class="panel-overlay"></div>
+    <!-- Left Panel with Reveal effect -->
+    <div class="panel panel-left panel-reveal theme-dark" id='panel-left-demo'>
+        <div class="content-block">
+            <p><a href="#" class="close-panel">关闭</a></p>
+        </div>
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-toggle"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">开启夜间模式</div>
+                            <div class="item-input">
+                                <label class="label-switch">
+                                    <input type="checkbox">
+                                    <div class="checkbox"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
