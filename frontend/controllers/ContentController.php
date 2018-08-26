@@ -58,14 +58,19 @@ class ContentController extends BasewebController{
     public function actionList(){
         $content_type = intval($this->getParam('content_type'));
         return $this->render('list',[
-            'content_type' => $content_type
+            'content_type' => $content_type,
+            'type' =>  \common\models\Crawlercontenttype::findOne($content_type)
         ]);
     }
 
     public function actionAjaxList(){
         $content_type = intval($this->getParam('content_type'));
         $offset = intval($this->getParam('offset'));
-        $articles = Crawlerarticle::find()->where('content_type=' . $content_type)->offset($offset)->limit(20)
+        $q = Crawlerarticle::find();
+        if($content_type){
+            $q->where('content_type=' . $content_type);
+        }
+        $articles = $q->offset($offset)->limit(20)
             ->orderBy('article_time desc')->select('id,title,article_time')->all();
         return $this->jsonSuccess($articles);
     }

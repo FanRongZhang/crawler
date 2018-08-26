@@ -55,10 +55,12 @@ AppAsset::register($this);
                 <?php
             }
             ?>
+            <!--
             <a class="tab-item" href="/me/">
                 <span class="icon icon-star"></span>
                 <span class="tab-label">我的服务</span>
             </a>
+            -->
         </nav>
 
 

@@ -1,5 +1,5 @@
 <?php
-
+$this->title = $type->name;
 ?>
 
 
@@ -21,6 +21,8 @@
 </div>
 
 <script>
+    $.init();
+
     // 加载flag
     var loading = false;
 
