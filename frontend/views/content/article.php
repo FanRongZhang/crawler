@@ -30,4 +30,29 @@ $this->title = $article->title;
         echo $c;
         ?>
     </div>
+    <div class="card-footer">
+        附件下载：<br>
+        <ul>
+        <?php
+        $aryUrls = \QL\QueryList::html($article->content)->rules([  //设置采集规则
+            // 采集所有a标签的href属性
+            'link' => ['a','href'],
+            // 采集所有a标签的文本内容
+            'text' => ['a','text']
+        ])->query()->getData();
+        foreach ($aryUrls as $one) {
+            $downUrl = $one['link'];
+            $ext = pathinfo($downUrl, PATHINFO_EXTENSION);
+            if (in_array($ext, ['doc', 'xls', 'docx', 'pdf', 'rar', 'zip'])) {
+
+                ?>
+
+                <li><a href="<?= $downUrl ?>" target="_blank" ><?= $one['text'] ?></a></li>
+
+        <?php
+            }
+        }
+        ?>
+        </ul>
+    </div>
 </div>
