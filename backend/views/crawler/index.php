@@ -81,3 +81,12 @@ endforeach;
 ?>
 </table>
 
+<?php
+
+echo \yii\widgets\LinkPager::widget([
+    'pagination' => $pages,
+    'firstPageLabel'=>true,
+    'lastPageLabel'=>true,
+    'maxButtonCount'=>10
+]);
+?>

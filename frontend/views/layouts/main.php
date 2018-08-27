@@ -39,13 +39,19 @@ AppAsset::register($this);
             <h1 class="title"><?= Html::encode($this->title) ?></h1>
         </header>
 
+        <?php
+        $content_type = isset($_GET['content_type']) ? $_GET['content_type'] : 0;
+        ?>
+
         <nav class="bar bar-tab">
+            <a class="tab-item <?= $content_type == 0 ? 'active' : '' ?>" href="/">
+                <span class="icon icon-star"></span>
+                <span class="tab-label">综合信息</span>
+            </a>
             <?php
-            $current_i = 0;
             foreach ($contentTypes as $one) {
-                ++$current_i;
                 ?>
-                <a class="tab-item <?= $current_i == 1 ? 'active' : '' ?>" href="<?= \yii\helpers\Url::toRoute([
+                <a class="tab-item <?= $content_type == $one->id ? 'active' : '' ?>" href="<?= \yii\helpers\Url::toRoute([
                         '/content/list',
                         'content_type' => $one->id
                 ]) ?>">

@@ -36,15 +36,11 @@ use yii;
 class ContentController extends BasewebController{
 
     public function actionIndex(){
-        $this->returnPageCacheIfExists();
-
         $articles = Crawlerarticle::find()->limit(20)
             ->orderBy('article_time desc')->select('id,title,article_time')->all();
         $string = $this->render('index',[
             'articles' => $articles
         ]);
-
-        $this->makePageCache($string, 10);
         return $string;
     }
 
@@ -71,7 +67,10 @@ class ContentController extends BasewebController{
             $q->where('content_type=' . $content_type);
         }
         $articles = $q->offset($offset)->limit(20)
-            ->orderBy('article_time desc')->select('id,title,article_time')->all();
+            ->orderBy('article_time desc')->select('id,title,article_time')->asArray()->all();
+        foreach ($articles as &$one){
+            $one['article_time'] = date('Y-m-d',$one['article_time']);
+        }
         return $this->jsonSuccess($articles);
     }
 

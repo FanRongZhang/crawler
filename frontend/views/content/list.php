@@ -10,7 +10,7 @@ $this->title = $type->name;
 </style>
 <!-- 添加 class infinite-scroll 和 data-distance  向下无限滚动可不加infinite-scroll-bottom类，这里加上是为了和下面的向上无限滚动区分-->
 <div class="content infinite-scroll infinite-scroll-bottom" data-distance="100">
-    <div class="list-block">
+    <div class="list-block" style="margin-top:3px;">
         <ul class="list-container">
         </ul>
     </div>
@@ -30,7 +30,7 @@ $this->title = $type->name;
         // 生成新条目的HTML
         var html = '';
         for(var i in data){
-            var $a = '<a href="/content/article?id='+ data[i].id +'">'+ data[i].title +'</a>';
+            var $a = '<a href="/content/article?id='+ data[i].id +'">'+ data[i].title + '&nbsp;&nbsp;' + data[i].article_time +'</a>';
             html += '<li class="item-content"><div class="item-inner"><div class="item-title">' + $a + '</div></div></li>';
         }
         if(html) {
