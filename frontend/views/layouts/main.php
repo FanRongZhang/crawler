@@ -70,7 +70,7 @@ AppAsset::register($this);
         </nav>
 
 
-        <div class="content"><?= $content ?></div>
+        <?= $content ?>
     </div>
 
     <div class="panel-overlay"></div>

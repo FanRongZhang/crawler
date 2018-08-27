@@ -18,11 +18,13 @@ $this->title = '综合信息';
             foreach ($articles as $one) {
                 ?>
                 <li class="item-content">
-                    <a href="/content/article?id=<?= $one->id ?>">
-                        <?= \yii\helpers\Html::encode($one->title) ?>
-                        &nbsp; &nbsp;
-                        <?= \yii\helpers\Html::encode(date('Y-m-d',$one->article_time)) ?>
-                    </a>
+                    <div class="item-inner"><div class="item-title">
+                        <a href="/content/article?id=<?= $one->id ?>">
+                            <?= \yii\helpers\Html::encode($one->title) ?>
+                            &nbsp; &nbsp;
+                            <?= \yii\helpers\Html::encode(date('Y-m-d',$one->article_time)) ?>
+                        </a>
+                    </div>
                 </li>
                 <?php
             }
@@ -56,6 +58,7 @@ $this->title = '综合信息';
     }
 
     var pulldata = function () {
+        console.log('pull data...');
         // 如果正在加载，则退出
         if (loading) return;
 

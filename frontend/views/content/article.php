@@ -5,7 +5,7 @@ $this->title = $article->title;
 ?>
 
 
-
+<div class="content">
 <div class="card">
     <div class="card-header">
         <h1><?= \yii\helpers\Html::encode($article->title) ?></h1>
@@ -68,4 +68,5 @@ $this->title = $article->title;
     </div>
 
 
+</div>
 </div>

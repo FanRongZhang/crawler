@@ -41,6 +41,7 @@ $this->title = $type->name;
     }
 
     var pulldata = function () {
+        console.log('pull data...');
         // 如果正在加载，则退出
         if (loading) return;
 
